@@ -2,7 +2,7 @@ import React from 'react';
 
 function App(props) {
 
-  const modificarNome = (event)=>{
+  const modificarNome = (event) => {
     console.log(event.target.value)
   }
   const criaComboBox = () => {
@@ -21,11 +21,12 @@ function App(props) {
   return (
     <>
       <input
+        className="texto-centralizado"
         type="text"
         placeholder="Digite seu texto aqui"
         onChange={modificarNome}
       />
-      <h1>{props.nome}</h1>
+      <h1 >{props.nome}</h1>
       <h2>Outro Componente</h2>
       <MeuComboBox />
       <hr></hr>
@@ -33,7 +34,7 @@ function App(props) {
       <label>{props.nome} - Idade: {props.idade}</label>
     </>
   )
-} 
+}
 
 
 export default App
