@@ -1,8 +1,15 @@
 const PRODUTOS = '_PRODUTOS'
 
+function ErroValidacao(errors){
+    this.errors = errors;
+}
+
 export default class ProdutoService{
     
     salvar = (produto)=>{
+
+        this.validar(produto)
+
         let produtos =  localStorage.getItem(PRODUTOS)
 
         if(!produtos){
@@ -15,4 +22,32 @@ export default class ProdutoService{
 
         localStorage.setItem(PRODUTOS, JSON.stringify(produtos))
     }
+
+
+    validar =(produto)=>{
+        const errors = []
+
+        if(!produto.nome){
+            errors.push('O campo Nome é obrigatório')
+        }
+
+        if(!produto.sku){
+            errors.push('O campo SKU é obrigatório')
+        }
+
+        if(!produto.preco || produto.preco <= 0){
+            errors.push('O campo Preço deve ter um preço maior que zero(0).')
+        }
+
+        if(!produto.fornecedor){
+            errors.push('O campo Fornecedor é obrigatório')
+        }
+
+        if(errors.length > 0 ){
+            throw new ErroValidacao(errors)
+        }
+
+    }
 }
+
+
