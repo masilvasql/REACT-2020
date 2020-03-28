@@ -6,12 +6,13 @@ const estadoInicial = {
     sku: '',
     descricao: '',
     preco: 0,
-    fornecedor: ''
+    fornecedor: '',
+    sucesso: false
 }
 
 export default class CadastroProduto extends React.Component {
 
-    constructor(){
+    constructor() {
         super()
         this.service = new ProdutoService();
     }
@@ -35,10 +36,11 @@ export default class CadastroProduto extends React.Component {
         }
 
         this.service.salvar(produto)
-        console.log("SALVO")
+        this.limpaCampos()
+        this.setState({ sucesso: true })
     }
 
-    limpaCampos = ()=>{
+    limpaCampos = () => {
         this.setState(estadoInicial)
     }
 
@@ -50,6 +52,15 @@ export default class CadastroProduto extends React.Component {
                         Cadastro de Produto
                     </div>
                     <div className="card-body">
+
+                        {
+                            this.state.sucesso &&
+                            <div className="alert alert-dismissible alert-success hidden">
+                                <button type="button" className="close" data-dismiss="alert"  onClick={()=> this.setState({sucesso:false})}>&times;</button>
+                                <strong>Aviso!</strong>
+                                Cadastro Realizado com Sucesso.
+                        </div>
+                        }
 
                         <div className='row'>
                             <div className="col-md-6">
@@ -127,7 +138,7 @@ export default class CadastroProduto extends React.Component {
                                 >Salvar</button>
                             </div>
                             <div className="col-md-1">
-                                <button 
+                                <button
                                     className="btn btn-primary"
                                     onClick={this.limpaCampos}
                                 >Limpar</button>
