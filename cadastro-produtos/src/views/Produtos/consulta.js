@@ -1,16 +1,27 @@
 import React from 'react'
+import ProdutoService from '../../app/produtoService'
 
 export default class ConsultaProdutos extends React.Component {
 
+    constructor(){
+        super()
+        this.service = new ProdutoService()
+    }
+
     state = {
         produtos: []
+    }
+
+    componentDidMount(){
+        const produtos = this.service.obterProdutos();
+        this.setState({produtos})
     }
 
     render() {
         return (
             <div className="card">
                 <div className="card-header">
-                    Cadastro de Produto
+                    Consulta Produtos
                     </div>
                 <div className="card-body">
                     <table className="table table-hover">
@@ -26,9 +37,9 @@ export default class ConsultaProdutos extends React.Component {
 
                         <tbody>
                             {
-                                this.state.produtos.map(produto => {
+                                this.state.produtos.map((produto, i) => {
                                     return (
-                                        <tr>
+                                        <tr key={i}>
                                             <th>{produto.nome}</th>
                                             <th>{produto.sku}</th>
                                             <th>{produto.preco}</th>

@@ -23,6 +23,12 @@ export default class ProdutoService{
         localStorage.setItem(PRODUTOS, JSON.stringify(produtos))
     }
 
+    obterProdutos = ()=>{
+        const produtos =  localStorage.getItem(PRODUTOS)
+        return JSON.parse(produtos)
+
+    }
+
 
     validar =(produto)=>{
         const errors = []
@@ -46,7 +52,6 @@ export default class ProdutoService{
         if(errors.length > 0 ){
             throw new ErroValidacao(errors)
         }
-
     }
 }
 
