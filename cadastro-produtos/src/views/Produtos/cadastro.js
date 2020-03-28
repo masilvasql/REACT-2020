@@ -1,5 +1,6 @@
 import React from 'react'
 import ProdutoService from '../../app/produtoService'
+import { withRouter } from 'react-router-dom'
 
 
 const estadoInicial = {
@@ -12,14 +13,31 @@ const estadoInicial = {
     errors: []
 }
 
-export default class CadastroProduto extends React.Component {
+
+class CadastroProduto extends React.Component {
 
     constructor() {
         super()
         this.service = new ProdutoService();
     }
 
+
     state = estadoInicial
+    /*
+     * this.props.match.params --> captura os parâmetros da url
+     *  */ 
+    componentDidMount(){
+       const sku = this.props.match.params.sku
+       
+       if(sku){
+           const resultado = this.service.obterProdutos().filter(produto => produto.sku === sku)
+           if(resultado.length === 1){
+               const produtoEncontrado = resultado[0]
+               //desta forma, insere dentro do state
+               this.setState({...produtoEncontrado})
+           }
+       }
+    }
 
     onChange = (event) => {
         const valor = event.target.value
@@ -172,3 +190,5 @@ export default class CadastroProduto extends React.Component {
         )
     }
 }
+
+export default withRouter(CadastroProduto)
