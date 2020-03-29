@@ -1,6 +1,7 @@
 import React from 'react'
 import ProdutoService from '../../app/produtoService'
 import { withRouter } from 'react-router-dom'
+import Card from '../../components/card'
 
 class ConsultaProdutos extends React.Component {
 
@@ -29,60 +30,54 @@ class ConsultaProdutos extends React.Component {
 
     deletar = (sku) => {
         const produtos = this.service.deletar(sku)
-        this.setState({produtos})
+        this.setState({ produtos })
     }
 
     render() {
         return (
-            <div className="card">
-                <div className="card-header">
-                    Consulta Produtos
-                    </div>
-                <div className="card-body">
-                    <table className="table table-hover">
-                        <thead>
-                            <tr>
-                                <th>Nome</th>
-                                <th>SKU</th>
-                                <th>Preço</th>
-                                <th>Fornecedor</th>
-                                <th></th>
-                            </tr>
-                        </thead>
+            <Card header={'Consulta Produtos'}>
+                <table className="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>SKU</th>
+                            <th>Preço</th>
+                            <th>Fornecedor</th>
+                            <th></th>
+                        </tr>
+                    </thead>
 
-                        <tbody>
-                            {
-                                this.state.produtos.map((produto, i) => {
-                                    return (
-                                        <tr key={i}>
-                                            <th>{produto.nome}</th>
-                                            <th>{produto.sku}</th>
-                                            <th>{produto.preco}</th>
-                                            <th>{produto.fornecedor}</th>
-                                            <th>
-                                                <button
-                                                    className="btn btn-primary"
-                                                    onClick={() => this.preparaEditar(produto.sku)}
-                                                >
-                                                    Editar
+                    <tbody>
+                        {
+                            this.state.produtos.map((produto, i) => {
+                                return (
+                                    <tr key={i}>
+                                        <th>{produto.nome}</th>
+                                        <th>{produto.sku}</th>
+                                        <th>{produto.preco}</th>
+                                        <th>{produto.fornecedor}</th>
+                                        <th>
+                                            <button
+                                                className="btn btn-primary"
+                                                onClick={() => this.preparaEditar(produto.sku)}
+                                            >
+                                                Editar
                                                 </button>
 
-                                                <button 
-                                                    className="btn btn-danger"
-                                                    onClick={()=> this.deletar(produto.sku  )}
-                                                >
-                                                    Remover
+                                            <button
+                                                className="btn btn-danger"
+                                                onClick={() => this.deletar(produto.sku)}
+                                            >
+                                                Remover
                                                 </button>
-                                            </th>
-                                        </tr>
-                                    )
-                                })
-                            }
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
+                                        </th>
+                                    </tr>
+                                )
+                            })
+                        }
+                    </tbody>
+                </table>
+            </Card>
         )
     }
 }
