@@ -2,9 +2,9 @@ import React from 'react'
 import ProdutoService from '../../app/produtoService'
 import { withRouter } from 'react-router-dom'
 
- class ConsultaProdutos extends React.Component {
+class ConsultaProdutos extends React.Component {
 
-    constructor(){
+    constructor() {
         super()
         this.service = new ProdutoService()
     }
@@ -13,9 +13,9 @@ import { withRouter } from 'react-router-dom'
         produtos: []
     }
 
-    componentDidMount(){
+    componentDidMount() {
         const produtos = this.service.obterProdutos();
-        this.setState({produtos})
+        this.setState({ produtos })
     }
 
     /*
@@ -23,9 +23,13 @@ import { withRouter } from 'react-router-dom'
         permite que navegue de ações do componente para outras rotas
     */
 
-    preparaEditar = (sku)=>{
-        console.log(sku)
+    preparaEditar = (sku) => {
         this.props.history.push(`/cadastro-produtos/${sku}`)
+    }
+
+    deletar = (sku) => {
+        const produtos = this.service.deletar(sku)
+        this.setState({produtos})
     }
 
     render() {
@@ -56,13 +60,19 @@ import { withRouter } from 'react-router-dom'
                                             <th>{produto.preco}</th>
                                             <th>{produto.fornecedor}</th>
                                             <th>
-                                                <button 
-                                                    className="btn btn-primary" 
-                                                    onClick={()=>this.preparaEditar(produto.sku)}
+                                                <button
+                                                    className="btn btn-primary"
+                                                    onClick={() => this.preparaEditar(produto.sku)}
                                                 >
                                                     Editar
                                                 </button>
-                                                <button className="btn btn-danger">Remover</button>
+
+                                                <button 
+                                                    className="btn btn-danger"
+                                                    onClick={()=> this.deletar(produto.sku  )}
+                                                >
+                                                    Remover
+                                                </button>
                                             </th>
                                         </tr>
                                     )
