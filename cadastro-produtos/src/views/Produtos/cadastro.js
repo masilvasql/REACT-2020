@@ -10,7 +10,8 @@ const estadoInicial = {
     preco: 0,
     fornecedor: '',
     sucesso: false,
-    errors: []
+    errors: [],
+    atualizando:false
 }
 
 
@@ -34,7 +35,7 @@ class CadastroProduto extends React.Component {
            if(resultado.length === 1){
                const produtoEncontrado = resultado[0]
                //desta forma, insere dentro do state
-               this.setState({...produtoEncontrado})
+               this.setState({...produtoEncontrado, atualizando:true})
            }
        }
     }
@@ -76,7 +77,13 @@ class CadastroProduto extends React.Component {
             <>
                 <div className="card">
                     <div className="card-header">
-                        Cadastro de Produto
+
+                        {
+                            !this.state.atualizando 
+                            ?'Cadastro de Produto'
+                            :'Atualizar produto'
+                        }
+                        
                     </div>
                     <div className="card-body">
 
@@ -84,7 +91,12 @@ class CadastroProduto extends React.Component {
                             <div className="alert alert-dismissible alert-success hidden">
                                 <button type="button" className="close" data-dismiss="alert" onClick={() => this.setState({ sucesso: false })}>&times;</button>
                                 <strong>Aviso! </strong>
-                                Cadastro Realizado com Sucesso.
+                                {
+                                    !this.state.atualizando 
+                                    ? 'Cadastro Realizado com Sucesso.'
+                                    : 'Atualização Realizada com Sucesso'
+                                }
+                                
                         </div>
                         }
 
@@ -118,6 +130,7 @@ class CadastroProduto extends React.Component {
                                 <div className="form-group">
                                     <label>SKU:</label>
                                     <input
+                                        disabled={this.state.atualizando}
                                         type="text"
                                         className='form-control'
                                         value={this.state.sku}
@@ -174,7 +187,14 @@ class CadastroProduto extends React.Component {
                                 <button
                                     className="btn btn-success"
                                     onClick={this.onSubmit}
-                                >Salvar</button>
+                                >
+                                    {
+                                        !this.state.atualizando
+                                        ?'Salvar'
+                                        :'Atualizar'
+                                    }
+                                    
+                                </button>
                             </div>
                             <div className="col-md-1">
                                 <button
