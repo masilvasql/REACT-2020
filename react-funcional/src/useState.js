@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 
-function App() {
+function UseState() {
   // Primeira forma de declarar o HOOK
-  const [numero, setNumero] = useState(0)
-  const [segundoNumero, setSegundoNumero] = useState(0)
-  const [resultado, setResultado] = useState(0)
+  const [numero, setNumero] = useState()
+  const [segundoNumero, setSegundoNumero] = useState()
+  const [resultado, setResultado] = useState()
 
   //SEGUNDA FORMA DE DECLARAR HOOKS
 
@@ -21,23 +21,9 @@ function App() {
     setResultado(numeroInt + segNumInt)
   }
 
-  /*pode ser utilizado como comonendDidMount()
-  useEfect tem dois parâmetros, o primeiro é uma
-  função, o segundo é opcional, que é um array
-  o array serve para passar as variáveis de estado
-  toda vez que ela for modificado, o useEffect será
-  executado novamente.
-  se não for passado o array como segundo parâmetro,
-  ele será executado toda vez que qualquer variável for modificada
-  */
-  useEffect(()=>{
-    console.log('variável número ', numero)
-  },[numero])
-
 
 
   return (
-    
     <div>
       Número 1: <br></br>
       <input type="text" value={numero} onChange={(e) => setNumero(e.target.value)}></input>
@@ -55,4 +41,4 @@ function App() {
   );
 }
 
-export default App;
+export default UseState;
